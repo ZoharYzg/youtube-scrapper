@@ -19,7 +19,7 @@ Youtube scrapping sub-mission: targeting whether video is viral, scrapping over 
 
 7) Crawl over the keywords list and search for 50 videos per keyword. => v
 
-8) Add time functionality to stop execution of the program after X (minutes) are over.
+8) Add time functionality to stop execution of the program after X (minutes) are over. => v
 
-9) Add shell scripting to add the functionality of script excecution every Y hours.
+9) Add cron jobs functionality to add the functionality of script excecution every Y hours. => v
 
