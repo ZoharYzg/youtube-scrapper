@@ -1,0 +1,18 @@
+to do list for future web services:
+
+1) Get: user id, waiting time, current position, categorie
+operation: updates in the specified table the updated data and returns the json information with a playlist
+specified for the waiting & categories data.
+
+2) Get: user id, waiting time 
+operation: updates waiting time for specific username
+
+3) Get: user id
+operation: returns ultimate waiting time
+
+4) Get: game id
+operation: return game picture, explantory text, name 
+
+7) Get: object id, user id, like status
+operation: updates like status to the specified data 
+
