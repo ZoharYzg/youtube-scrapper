@@ -17,21 +17,21 @@ class social_auth {
 	private $error;
 	
 	/**
-     * Initialize MySQLI connection object with defined settings
-     *
-	 * @param string $host
-	 * @param string $user
-	 * @param string $pass
-	 * @param string $dbname
-     */
+	* Initialize MySQLI connection object with defined settings
+	*
+	* @param string $host
+	* @param string $user
+	* @param string $pass
+	* @param string $dbname
+	*/
 	public function __construct($host, $user, $pass, $dbname) {
 		$this->db = new MysqliDb ($host, $user, $pass, $dbname);
 	}
 	
 	/**
-     * Gets client's ip address using HTTP headers
-     *
-     */
+	* Gets client's ip address using HTTP headers
+	*
+	*/
 	public function get_ip_address() {
 		// check for shared internet/ISP IP
 		if (!empty($_SERVER['HTTP_CLIENT_IP']) && validate_ip($_SERVER['HTTP_CLIENT_IP'])) {
@@ -66,10 +66,10 @@ class social_auth {
 	}
 	
 	/**
-     * Splits Google request params and saving in the database
-     *
-	 * @param string $url
-    */
+	* Splits Google request params and saving in the database
+	*
+	* @param string $url
+	*/
 	public function get_google_credintals($url) {
 		$params = explode("&", $url);
 		$email = explode("=", $params[1])[1];
@@ -108,10 +108,10 @@ class social_auth {
 	}
 	
 	/**
-     * Splits Facebook request params and saving in the database
-     *
-	 * @param string $url
-    */
+	* Splits Facebook request params and saving in the database
+	*
+	* @param string $url
+	*/
 	public function get_facebook_credintals($url) {
 		$params = explode("&", $url);
 		$token = explode("=", $params[1])[1];
@@ -150,10 +150,10 @@ class social_auth {
 	}
 	
 	/**
-     * Splits given request to Facebook / Google handler 
-     *
-	 * @param string $url
-    */
+	* Splits given request to Facebook / Google handler 
+	*
+	* @param string $url
+	*/
 	public function get_social_data($url) {
 		$status = 0;
 		$filterd_url = explode("?", $url)[1];
