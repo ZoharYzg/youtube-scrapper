@@ -17,21 +17,21 @@ class social_auth {
 	private $error;
 	
 	/**
-	* Initialize MySQLI connection object with defined settings
-	*
-	* @param string $host
-	* @param string $user
-	* @param string $pass
-	* @param string $dbname
-	*/
+     * Initialize MySQLI connection object with defined settings
+     *
+	 * @param string $host
+	 * @param string $user
+	 * @param string $pass
+	 * @param string $dbname
+     */
 	public function __construct($host, $user, $pass, $dbname) {
 		$this->db = new MysqliDb ($host, $user, $pass, $dbname);
 	}
 	
 	/**
-	* Gets client's ip address using HTTP headers
-	*
-	*/
+     * Gets client's ip address using HTTP headers
+     *
+     */
 	public function get_ip_address() {
 		// check for shared internet/ISP IP
 		if (!empty($_SERVER['HTTP_CLIENT_IP']) && validate_ip($_SERVER['HTTP_CLIENT_IP'])) {
@@ -66,10 +66,10 @@ class social_auth {
 	}
 	
 	/**
-	* Splits Google request params and saving in the database
-	*
+     * Splits Google request params and saving in the database
+     *
 	 * @param string $url
-	*/
+    */
 	public function get_google_credintals($url) {
 		$params = explode("&", $url);
 		$email = explode("=", $params[1])[1];
@@ -78,37 +78,40 @@ class social_auth {
 		$gender = explode("=", $params[4])[1];
 		$lang = explode("=", $params[5])[1];
 		
-		// insert all of the params to the specified table in the DB
-		$data = array(
-		"id" => "",
-		"token" => "",
-		"position" => "",
-		"waiting_time" => "",
-		"user_group" => 1,
-		"datetime" => date_default_timezone_get()
-		);
-		
-		$id = $db->insert ('users', $data);
-		
-		$user_data = array(
-		"user_id" => $id,
-		"birth_date" => $birthdate,
-		"pic" => $pic,
-		"gender" => $gender,
-		"country" => "",
-		"email" => $email,
-		"ip" => $this->get_ip_address()
-		);
-		
-		$id = ($id) ? ($db->insert ('user_data', $user_data)) : ($id);
-		return $id;
+		$result = $db->rawQuery('SELECT * from user_data where email = $email');
+		if(!count($result)) {
+			// insert all of the params to the specified table in the DB
+			$data = array(
+			"id" => "",
+			"token" => "",
+			"position" => "",
+			"waiting_time" => "",
+			"user_group" => 1,
+			"datetime" => date_default_timezone_get()
+			);
+			
+			$id = $db->insert ('users', $data);
+			
+			$user_data = array(
+			"user_id" => $id,
+			"birth_date" => $birthdate,
+			"pic" => $pic,
+			"gender" => $gender,
+			"country" => "",
+			"email" => $email,
+			"ip" => $this->get_ip_address()
+			);
+			
+			$id = ($id) ? ($db->insert ('user_data', $user_data)) : ($id);
+			return $id;
+		}
 	}
 	
 	/**
-	* Splits Facebook request params and saving in the database
-	*
+     * Splits Facebook request params and saving in the database
+     *
 	 * @param string $url
-	*/
+    */
 	public function get_facebook_credintals($url) {
 		$params = explode("&", $url);
 		$token = explode("=", $params[1])[1];
@@ -118,38 +121,39 @@ class social_auth {
 		$country = explode("=", $params[5])[1];
 		$email = explode("=", $params[6])[1];
 		
-		var_dump($params);
-		
-		// insert all of the params to the specified table in the DB
-		$user_data = array(
-		"token" => $token,
-		"position" => "",
-		"waiting_time" => "",
-		"user_group" => 1,
-		"datetime" => date_default_timezone_get()
-		);
-		
-		$id = $this->db->insert ('users', $user_data);
-		
-		$data = array(
-		"user_id" => $id,
-		"birth_date" => $birthdate,
-		"pic" => $pic,
-		"gender" => $gender,
-		"country" => $country,
-		"email" => $email,
-		"ip" => $this->get_ip_address()
-		);
-		
-		$id = ($id) ? ($this->db->insert ('user_data', $data)) : ($id);
-		return $id;
+		$result = $db->rawQuery('SELECT * from users where token = $token');
+		if(!count($result)) {
+			// insert all of the params to the specified table in the DB
+			$user_data = array(
+			"token" => $token,
+			"position" => "",
+			"waiting_time" => "",
+			"user_group" => 1,
+			"datetime" => date_default_timezone_get()
+			);
+			
+			$id = $this->db->insert ('users', $user_data);
+			
+			$data = array(
+			"user_id" => $id,
+			"birth_date" => $birthdate,
+			"pic" => $pic,
+			"gender" => $gender,
+			"country" => $country,
+			"email" => $email,
+			"ip" => $this->get_ip_address()
+			);
+			
+			$id = ($id) ? ($this->db->insert ('user_data', $data)) : ($id);
+			return $id;
+		}
 	}
 	
 	/**
-	* Splits given request to Facebook / Google handler 
-	*
+     * Splits given request to Facebook / Google handler 
+     *
 	 * @param string $url
-	*/
+    */
 	public function get_social_data($url) {
 		$status = 0;
 		$filterd_url = explode("?", $url)[1];
@@ -165,7 +169,7 @@ class social_auth {
 	}
 }
 
-$auth_obj = new social_auth("localhost", "root", "", "");
+$auth_obj = new social_auth("localhost", "root", "", "waitforit");
 $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $auth_obj->get_social_data($url);
 ?>
