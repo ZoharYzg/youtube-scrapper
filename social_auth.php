@@ -165,7 +165,7 @@ class social_auth {
 	}
 }
 
-$auth_obj = new social_auth("localhost", "root", "", "waitforit");
+$auth_obj = new social_auth("localhost", "root", "", "");
 $url =  "//{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
 $auth_obj->get_social_data($url);
 ?>
