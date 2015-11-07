@@ -17,22 +17,22 @@ class mark_object {
 	private $error;
 	
 	/**
-     * Initialize MySQLI connection object with defined settings
-     *
-	 * @param string $host
-	 * @param string $user
-	 * @param string $pass
-	 * @param string $dbname
-     */
+	* Initialize MySQLI connection object with defined settings
+	*
+	* @param string $host
+	* @param string $user
+	* @param string $pass
+	* @param string $dbname
+	*/
 	public function __construct($host, $user, $pass, $dbname) {
 		$this->db = new MysqliDb ($host, $user, $pass, $dbname);
 	}
 	
 	/**
-	 * Gets client request and updates like status in object id for user id
-	 * 
-	 * @param string $url
-	 */
+	* Gets client request and updates like status in object id for user id
+	* 
+	* @param string $url
+	*/
 	public function get_request($url) {
 		$filterd_url = explode("?", $url)[1];
 		$object_id = explode("=", explode("&", $filterd_url)[0])[1];
