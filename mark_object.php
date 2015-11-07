@@ -41,11 +41,11 @@ class mark_object {
 		$watching_time = isset(explode("&", $filterd_url)[3]) ? (explode("=", explode("&", $filterd_url)[3])[1]) : (0);
 		
 		$data = Array (
-               "user_id" => $user_id,
-               "object_id" => $object_id,
-			   "watching_time" => $watching_time,
-			   "like_status" => $like_status,
-			   "date" => date("m.d.y")
+		"user_id" => $user_id,
+		"object_id" => $object_id,
+		"watching_time" => $watching_time,
+		"like_status" => $like_status,
+		"date" => date("m.d.y")
 		);
 		
 		$id = $this->db->insert ('logs', $data);
